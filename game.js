@@ -15,8 +15,8 @@ const CONFIG = {
 };
 
 // Supabase setup (Replace with your actual keys from project dashboard)
-const SUPABASE_URL = 'https://YOUR_PROJECT_ID.supabase.co';
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const SUPABASE_URL = 'https://kibehaqhrsdbhkobbiwx.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtpYmVoYXFocnNkYmhrb2JiaXd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI3NDA1MDYsImV4cCI6MjEwODMxNjUwNn0.qi-PPSqmtYPqsgvWphuB5-mA3qcrIRdewliALKng1Rw';
 const supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
 // PostHog analytics hook
