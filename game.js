@@ -21,7 +21,7 @@ const supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SU
 
 // PostHog analytics hook
 if (window.posthog) {
-  window.posthog.init('YOUR_POSTHOG_API_KEY', { api_host: 'https://us.i.posthog.com' });
+  window.posthog.init('phc_qKd3ush8W4HttXRKEw4HAaZuh4eFvhpAtQUsRV6rr9nG', { api_host: 'https://us.i.posthog.com' });
 }
 
 // --- 2. RETRO SOUND SYNTHESIZER (Web Audio API) ---
