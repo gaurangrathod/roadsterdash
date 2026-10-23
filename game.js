@@ -14,15 +14,12 @@ const CONFIG = {
   ROAD_LENGTH: 400
 };
 
-// Supabase setup (Replace with your actual keys from project dashboard)
+// Supabase client instance (Renamed to 'supabaseClient' to prevent name collision)
 const SUPABASE_URL = 'https://kibehaqhrsdbhkobbiwx.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtpYmVoYXFocnNkYmhrb2JiaXd4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI3NDA1MDYsImV4cCI6MjEwODMxNjUwNn0.qi-PPSqmtYPqsgvWphuB5-mA3qcrIRdewliALKng1Rw';
-const supabase = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
-
-// PostHog analytics hook
-if (window.posthog) {
-  window.posthog.init('phc_qKd3ush8W4HttXRKEw4HAaZuh4eFvhpAtQUsRV6rr9nG', { api_host: 'https://us.i.posthog.com' });
-}
+const supabaseClient = (window.supabase && SUPABASE_URL.startsWith('http')) 
+  ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) 
+  : null;
 
 // --- 2. RETRO SOUND SYNTHESIZER (Web Audio API) ---
 class SoundFX {
@@ -399,9 +396,9 @@ render();
 
 // --- 10. SUPABASE LEADERBOARD INTEGRATION ---
 async function fetchLeaderboard() {
-  if (!supabase) return;
+  if (!supabaseClient) return;
   try {
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from('scores')
       .select('name, score')
       .order('score', { ascending: false })
@@ -426,19 +423,17 @@ async function submitScore() {
   const name = nameInput.value.trim() || 'ANON_DRIVER';
   const finalScore = Math.floor(state.score);
 
-  if (!supabase) {
-    alert('Please configure your SUPABASE_URL and SUPABASE_ANON_KEY inside game.js');
+  if (!supabaseClient) {
+    alert('Configure your SUPABASE_URL and SUPABASE_ANON_KEY in game.js to submit online scores.');
     return;
   }
 
-  const { error } = await supabase.from('scores').insert([{ name, score: finalScore }]);
+  const { error } = await supabaseClient.from('scores').insert([{ name, score: finalScore }]);
   if (!error) {
     nameInput.value = '';
     fetchLeaderboard();
   }
 }
-
-document.getElementById('btn-submit').onclick = submitScore;
 
 // --- 11. START / RESTART GAME ---
 document.getElementById('btn-start').onclick = () => {
