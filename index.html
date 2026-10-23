@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Roadster Dash — Synthwave Arcade</title>
+
+  <!-- Typography specified -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Rajdhani:wght@500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+  <!-- Core Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://us-assets.i.posthog.com/static/array.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="game-container"></div>
+
+  <!-- Heads-Up Display (HUD) -->
+  <div id="hud">
+    <div class="hud-top">
+      <div class="hud-box">
+        <span class="label">SCORE</span>
+        <span id="score-val" class="mono-value">0</span>
+      </div>
+      <div class="hud-box">
+        <span class="label">SPEED</span>
+        <span id="speed-val" class="mono-value">0 <small>KM/H</small></span>
+      </div>
+      <div class="hud-box">
+        <span class="label">MULTIPLIER</span>
+        <span id="mult-val" class="mono-value">1.0x</span>
+      </div>
+    </div>
+
+    <div id="stunt-banner" class="hidden">BARREL ROLL! +500</div>
+
+    <div class="hud-bottom">
+      <div class="boost-meter-container">
+        <div class="label">ROCKET BOOST</div>
+        <div class="boost-bar-bg">
+          <div id="boost-bar-fill"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Touch Controls for Mobile -->
+  <div id="touch-controls">
+    <div class="touch-row">
+      <button id="btn-left" class="t-btn">◀</button>
+      <button id="btn-jump" class="t-btn">JUMP</button>
+      <button id="btn-right" class="t-btn">▶</button>
+    </div>
+    <div class="touch-row">
+      <button id="btn-roll" class="t-btn stunt-btn">ROLL</button>
+      <button id="btn-boost" class="t-btn boost-btn">BOOST</button>
+    </div>
+  </div>
+
+  <!-- Start & Game Over Screen -->
+  <div id="overlay">
+    <div class="card">
+      <h1 class="glitch-title">ROADSTER DASH</h1>
+      <p class="subtitle">JUMP TRAFFIC. BARREL ROLL. HIT HYPERSPEED.</p>
+
+      <div id="final-stats" class="hidden">
+        <p>FINAL SCORE: <span id="final-score" class="mono-value">0</span></p>
+        <div class="input-group">
+          <input type="text" id="player-name" placeholder="ENTER CALLSIGN" maxlength="12" />
+          <button id="btn-submit" class="cta-button">SUBMIT SCORE</button>
+        </div>
+      </div>
+
+      <button id="btn-start" class="cta-button pulse">LAUNCH ROADSTER</button>
+
+      <div class="controls-guide">
+        <p><strong>[A / D]</strong> or <strong>[← / →]</strong> Steer Lanes</p>
+        <p><strong>[SPACE]</strong> or <strong>[W]</strong> Jump</p>
+        <p><strong>[Q] / [E]</strong> Mid-Air Barrel Roll</p>
+        <p><strong>[SHIFT]</strong> Rocket Thruster Boost</p>
+      </div>
+
+      <!-- Leaderboard -->
+      <div class="leaderboard-section">
+        <h3>GLOBAL TOP 10</h3>
+        <ul id="leaderboard-list">
+          <li>Loading high scores...</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
